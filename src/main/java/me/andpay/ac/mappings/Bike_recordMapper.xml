@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.andpay.ac.mappings.Bike_recordMapper">
+
+	<!-- 分页查询 -->
+	<select id="selectBike_recordList" parameterType="map" resultType="Bike_record">
+		select * from Bike_record where 1=1 
+		<if test="runId!=null">
+			and runId=#{runId}
+		</if>
+		<if test="bid!=null">
+			and bid=#{bid}
+		</if>
+		<if test="createTime!=null">
+			and createTime=#{createTime}
+		</if>
+		<if test="state!=null">
+			and state=#{state}
+		</if>
+		<if test="sortname!=null">
+			order by ${sortname}
+		</if>
+		<if test="sortorder!=null">
+			${sortorder}
+		</if>
+		<if test="countIndex!=null">
+			limit  ${countIndex},${pageSize}
+		</if>
+	</select>
+
+	<!-- 查询所有-->
+	<select id="selectAllBike_recordList" parameterType="map" resultType="Bike_record">
+		select * from Bike_record where 1=1 
+		<if test="runId!=null">
+			and runId=#{runId}
+		</if>
+		<if test="bid!=null">
+			and bid=#{bid}
+		</if>
+		<if test="createTime!=null">
+			and createTime=#{createTime}
+		</if>
+		<if test="state!=null">
+			and state=#{state}
+		</if>
+		<if test="sortname!=null">
+			order by ${sortname}
+		</if>
+		<if test="sortorder!=null">
+			${sortorder}
+		</if>
+	</select>
+
+	<!-- 查询总数 -->
+	<select id="selectBike_recordListCount" parameterType="map" resultType="int">
+		select count(1) from Bike_record where 1=1 
+		<if test="runId!=null">
+			and runId=#{runId}
+		</if>
+		<if test="bid!=null">
+			and bid=#{bid}
+		</if>
+		<if test="createTime!=null">
+			and createTime=#{createTime}
+		</if>
+		<if test="state!=null">
+			and state=#{state}
+		</if>
+	</select>
+
+	<!-- 根据ID查询 -->
+	<select id="selectBike_recordByRunId" parameterType="String" resultType="Bike_record">
+		select * from Bike_record where runId = #{runId}
+	</select>
+
+	<!-- 新增 -->
+	<insert id="insertBike_record" parameterType="Bike_record">
+		insert into  Bike_record 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="runId!=null">
+				runId,
+			</if>
+			<if test="bid!=null">
+				bid,
+			</if>
+			<if test="createTime!=null">
+				createTime,
+			</if>
+			<if test="state!=null">
+				state,
+			</if>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="runId!=null">
+				#{runId},
+			</if>
+			<if test="bid!=null">
+				#{bid},
+			</if>
+			<if test="createTime!=null">
+				#{createTime},
+			</if>
+			<if test="state!=null">
+				#{state},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 修改 -->
+	<update id="updateBike_record" parameterType="Bike_record">
+		update  Bike_record 
+		<set>
+			<if test="bid!=null">
+				bid=#{bid},
+			</if>
+			<if test="createTime!=null">
+				createTime=#{createTime},
+			</if>
+			<if test="state!=null">
+				state=#{state},
+			</if>
+		</set>
+		<where>
+			runId=#{runId}
+		</where>
+	</update>
+
+	<!-- 删除 -->
+	<delete id="deleteBike_record" parameterType="map">
+		delete from Bike_record where 1=1
+		<if test="runId!=null">
+			and runId = #{runId}
+		</if>
+		<if test="runIds!=null">
+			and runId in (${runIds})
+		</if>
+	</delete>
+
+</mapper>

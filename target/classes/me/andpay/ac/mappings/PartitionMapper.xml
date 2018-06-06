@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.andpay.ac.mappings.PartitionMapper">
+
+	<!-- 分页查询 -->
+	<select id="selectPartitionList" parameterType="map" resultType="Partition">
+		select * from Partition where 1=1 
+		<if test="address!=null">
+			and address=#{address}
+		</if>
+		<if test="type!=null">
+			and type=#{type}
+		</if>
+		<if test="state!=null">
+			and state=#{state}
+		</if>
+		<if test="sortname!=null">
+			order by ${sortname}
+		</if>
+		<if test="sortorder!=null">
+			${sortorder}
+		</if>
+		<if test="countIndex!=null">
+			limit  ${countIndex},${pageSize}
+		</if>
+	</select>
+
+	<!-- 查询所有-->
+	<select id="selectAllPartitionList" parameterType="map" resultType="Partition">
+		select * from Partition where 1=1 
+		<if test="address!=null">
+			and address=#{address}
+		</if>
+		<if test="type!=null">
+			and type=#{type}
+		</if>
+		<if test="state!=null">
+			and state=#{state}
+		</if>
+		<if test="sortname!=null">
+			order by ${sortname}
+		</if>
+		<if test="sortorder!=null">
+			${sortorder}
+		</if>
+	</select>
+
+	<!-- 查询总数 -->
+	<select id="selectPartitionListCount" parameterType="map" resultType="int">
+		select count(1) from Partition where 1=1 
+		<if test="address!=null">
+			and address=#{address}
+		</if>
+		<if test="type!=null">
+			and type=#{type}
+		</if>
+		<if test="state!=null">
+			and state=#{state}
+		</if>
+	</select>
+
+	<!-- 根据ID查询 -->
+	<select id="selectPartitionById" parameterType="Integer" resultType="Partition">
+		select * from Partition where id = #{id}
+	</select>
+
+	<!-- 新增 -->
+	<insert id="insertPartition" parameterType="Partition" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		insert into  Partition 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="address!=null">
+				address,
+			</if>
+			<if test="type!=null">
+				type,
+			</if>
+			<if test="state!=null">
+				state,
+			</if>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="address!=null">
+				#{address},
+			</if>
+			<if test="type!=null">
+				#{type},
+			</if>
+			<if test="state!=null">
+				#{state},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 修改 -->
+	<update id="updatePartition" parameterType="Partition">
+		update  Partition 
+		<set>
+			<if test="address!=null">
+				address=#{address},
+			</if>
+			<if test="type!=null">
+				type=#{type},
+			</if>
+			<if test="state!=null">
+				state=#{state},
+			</if>
+		</set>
+		<where>
+			id=#{id}
+		</where>
+	</update>
+
+	<!-- 删除 -->
+	<delete id="deletePartition" parameterType="map">
+		delete from Partition where 1=1
+		<if test="id!=null">
+			and id = #{id}
+		</if>
+		<if test="ids!=null">
+			and id in (${ids})
+		</if>
+	</delete>
+
+</mapper>
